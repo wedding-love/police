@@ -64,7 +64,6 @@
         #block-contacts { background-color: #c7b89e; }
         #block-calendar { background-color: #c5b497; }
 
-        /* СПОКОЙНЫЙ ШРИФТ ДЛЯ ЗАГОЛОВКОВ */
         .doc-title {
             font-family: 'Playfair Display', serif;
             font-weight: 600;
@@ -93,7 +92,6 @@
         .stamp-red { color: #a72626; border-color: #a72626; transform: rotate(-10deg); }
         .stamp-blue { color: #0d47a1; border-color: #0d47a1; transform: rotate(12deg); }
 
-        /* --- ФОТО (как было, с реальными картинками) --- */
         .mugshot-row {
             display: flex;
             flex-direction: row;
@@ -147,7 +145,6 @@
             font-size: 14px;
         }
 
-        /* --- ТАЙМЕР --- */
         .timer-grid {
             display: flex;
             justify-content: space-around;
@@ -174,7 +171,6 @@
             color: #aaa;
         }
 
-        /* --- ТАЙМИНГ (без смайликов и календарей) --- */
         .timeline {
             position: relative;
             margin: 10px 0;
@@ -204,7 +200,6 @@
             color: #333;
         }
 
-        /* --- ДРЕСС-КОД --- */
         .color-palette {
             display: flex;
             justify-content: space-between;
@@ -219,7 +214,6 @@
             box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
         }
 
-        /* --- КНОПКА ВМЕСТО КАРТЫ --- */
         .map-btn-container {
             text-align: center;
             margin: 15px 0 5px;
@@ -243,7 +237,6 @@
             border-color: #a72626;
         }
 
-        /* --- ФОРМА --- */
         .form-group {
             margin-bottom: 18px;
         }
@@ -297,7 +290,7 @@
             border-color: #a72626;
         }
 
-        /* --- КОНТАКТЫ (без смайликов) --- */
+        /* --- КОНТАКТЫ: ВЕСЬ ТЕКСТ ЧЁРНЫЙ, БЕЗ СИНЕГО --- */
         .contacts-grid {
             display: flex;
             flex-direction: column;
@@ -308,17 +301,29 @@
             background: rgba(0,0,0,0.05);
             border-left: 4px solid #a72626;
             padding: 10px 14px;
+            color: #000; /* принудительно чёрный для всего блока */
         }
         .contact-card strong {
             font-family: 'Playfair Display', serif;
             font-size: 16px;
+            color: #000; /* чёрный */
         }
         .contact-card p {
             font-size: 13px;
             margin-top: 5px;
+            color: #000; /* чёрный */
+        }
+        /* дополнительно для номеров телефонов — убираем синий и подчёркивание */
+        .contact-card a,
+        .contact-card a:visited,
+        .contact-card a:hover,
+        .contact-card a:active {
+            color: #000 !important;
+            text-decoration: none !important;
+            pointer-events: none; /* чтобы не открывался как ссылка */
+            cursor: default;
         }
 
-        /* --- ОТДЕЛЬНЫЙ БЛОК КАЛЕНДАРЯ (дата свадьбы) --- */
         .calendar-block {
             text-align: center;
             padding: 15px 10px;
@@ -348,7 +353,7 @@
         ДЕПАРТАМЕНТ БРАКОСОЧЕТАНИЙ // ДЕЛО № СВАДЬБА-2026
     </div>
 
-    <!-- БЛОК 1: ОРДЕР И ОРИЕНТИРОВКИ (ФОТО) -->
+    <!-- БЛОК 1: ОРДЕР -->
     <section class="document-block hidden-block" id="block-main">
         <div class="stamp stamp-red" style="top: 15px; right: 15px;">ДОСЬЕ</div>
         <h2 class="doc-title">ОРДЕР НА ПЕРЕХВАТ №0509</h2>
@@ -382,7 +387,7 @@
         </div>
     </section>
 
-    <!-- БЛОК 3: ОТДЕЛЬНЫЙ КАЛЕНДАРЬ С ДАТОЙ СВАДЬБЫ (без смайликов) -->
+    <!-- БЛОК 3: КАЛЕНДАРЬ (дата свадьбы) -->
     <section class="document-block hidden-block" id="block-calendar">
         <div class="stamp stamp-red" style="top: 10px; right: 10px;">ДАТА</div>
         <h2 class="doc-title">Календарь события</h2>
@@ -395,7 +400,7 @@
         </p>
     </section>
 
-    <!-- БЛОК 4: ПОДРОБНЫЙ ТАЙМИНГ (без календарей и смайликов) -->
+    <!-- БЛОК 4: ТАЙМИНГ -->
     <section class="document-block hidden-block" id="block-timeline">
         <h2 class="doc-title">Протокол следственных мероприятий</h2>
         
@@ -444,7 +449,7 @@
         </div>
     </section>
 
-    <!-- БЛОК 6: ЛОКАЦИЯ (кнопка вместо карты) -->
+    <!-- БЛОК 6: ЛОКАЦИЯ (кнопка) -->
     <section class="document-block hidden-block" id="block-location">
         <h2 class="doc-title">Координаты секретного объекта</h2>
         <div class="main-law">
@@ -457,7 +462,7 @@
         <p style="font-size:12px; text-align:center; margin-top:8px; color:#333;">Нажмите, чтобы увидеть место проведения</p>
     </section>
 
-    <!-- БЛОК 7: АНКЕТА ДОПРОСА (RSVP) -->
+    <!-- БЛОК 7: АНКЕТА (RSVP) -->
     <section class="document-block hidden-block" id="block-rsvp">
         <div class="stamp stamp-blue" style="top: 15px; right: 15px;">ПРОТОКОЛ ЯВКИ</div>
         <h2 class="doc-title">Лист допроса свидетеля</h2>
@@ -506,7 +511,7 @@
         </form>
     </section>
 
-    <!-- БЛОК 8: КОНТАКТЫ (без пожеланий, без смайликов) -->
+    <!-- БЛОК 8: КОНТАКТЫ (телефоны и всё чёрным) -->
     <section class="document-block hidden-block" id="block-contacts">
         <div class="stamp stamp-red" style="top: 10px; right: 10px;">СВЯЗЬ</div>
         <h2 class="doc-title">Канал связи</h2>
@@ -529,7 +534,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- ТАЙМЕР (5 сентября 2026 16:00) ---
+            // --- ТАЙМЕР ---
             const targetDate = new Date('September 5, 2026 16:00:00').getTime();
 
             const updateTimer = () => {
@@ -554,7 +559,7 @@
             setInterval(updateTimer, 1000);
             updateTimer();
 
-            // --- АНИМАЦИЯ СКРОЛЛА ---
+            // --- АНИМАЦИЯ ---
             const blocks = document.querySelectorAll('.hidden-block');
             const rotations = [-0.5, 0.4, -0.4, 0.5, -0.3, 0.3, -0.2, 0.4];
 
@@ -585,9 +590,8 @@
                 alert("Показания внесены в личное дело подозреваемых!");
             });
 
-            // --- КНОПКА "ОТКРЫТЬ НА КАРТЕ" (открывает Яндекс.Карты с адресом) ---
+            // --- КНОПКА КАРТЫ ---
             document.getElementById('openMapBtn').addEventListener('click', function() {
-                // адрес: Кафе "Публика", ул. Свободы, д. 12
                 window.open('https://yandex.by/maps/?text=Кафе Публика ул. Свободы 12', '_blank');
             });
         });
