@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>УГОЛОВНОЕ ДЕЛО № СВАДЬБА-2026</title>
     
+    <!-- ПОДКЛЮЧАЕМ ШРИФТЫ: Основной читаемый, акцентный — для заголовков и печатей -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Special+Elite&display=swap" rel="stylesheet">
@@ -23,7 +24,7 @@
                 linear-gradient(rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0.4) 50%);
             background-size: auto, 100% 4px;
             color: #222;
-            font-family: 'Courier Prime', monospace;
+            font-family: 'Courier Prime', monospace;  /* читаемый моноширинный шрифт */
             padding: 40px 10px;
             display: flex;
             flex-direction: column;
@@ -32,7 +33,7 @@
             overflow-x: hidden;
         }
 
-        /* Анимация плавного появления */
+        /* Анимация плавного появления блоков с эффектом "следственного дела" */
         .hidden-block {
             opacity: 0;
             transform: translateY(35px) scale(0.97);
@@ -44,6 +45,7 @@
             transform: translateY(0) scale(1) !important;
         }
 
+        /* ОСНОВНАЯ КАРТОЧКА "ДЕЛА" — стилизована под старую бумагу */
         .document-block {
             background-color: #c5b497;
             width: 100%;
@@ -55,13 +57,15 @@
             border-radius: 3px;
         }
 
-        /* Индивидуальные цвета папок */
+        /* Индивидуальные оттенки для разных "папок" */
         #block-main { background-color: #c5b497; }
         #block-timer { background-color: #bfae91; }
         #block-timeline { background-color: #cbc0aa; }
         #block-dresscode { background-color: #c2b59b; }
         #block-location { background-color: #c0b093; }
         #block-rsvp { background-color: #c9bc9c; }
+        /* НОВЫЙ БЛОК: КОНТАКТЫ И ПОЖЕЛАНИЯ */
+        #block-contacts { background-color: #c7b89e; }
 
         .doc-title {
             font-family: 'Special Elite', cursive;
@@ -89,10 +93,10 @@
         .stamp-red { color: #a72626; border-color: #a72626; transform: rotate(-10deg); }
         .stamp-blue { color: #0d47a1; border-color: #0d47a1; transform: rotate(12deg); }
 
-        /* --- ФОТО СТРОГО В ОДНУ СТРОКУ НА ЛЮБЫХ ЭКРАНАХ --- */
+        /* --- ФОТО ВСЕГДА В ОДНУ СТРОКУ (flex-row) --- */
         .mugshot-row {
             display: flex;
-            flex-direction: row; /* Всегда строка */
+            flex-direction: row;
             justify-content: space-between;
             gap: 10px;
             margin-bottom: 20px;
@@ -106,7 +110,7 @@
             box-shadow: 2px 4px 8px rgba(0,0,0,0.3);
             text-align: center;
             position: relative;
-            min-width: 0; /* Предотвращает распирание во флексбоксах */
+            min-width: 0;
         }
         .photo-frame img {
             width: 100%;
@@ -143,7 +147,7 @@
             font-size: 14px;
         }
 
-        /* --- СТИЛИ ТАЙМЕРА --- */
+        /* --- ТАЙМЕР (в стиле "отчет времени") --- */
         .timer-grid {
             display: flex;
             justify-content: space-around;
@@ -170,7 +174,7 @@
             color: #aaa;
         }
 
-        /* --- РАСШИРЕННЫЙ ТАЙМИНГ --- */
+        /* --- ТАЙМИНГ МЕРОПРИЯТИЙ --- */
         .timeline {
             position: relative;
             margin: 10px 0;
@@ -200,7 +204,7 @@
             color: #333;
         }
 
-        /* --- БЛОК ДРЕСС-КОД --- */
+        /* --- ДРЕСС-КОД: цветовая палитра --- */
         .color-palette {
             display: flex;
             justify-content: space-between;
@@ -215,7 +219,7 @@
             box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
         }
 
-        /* --- ИНТЕРАКТИВНАЯ КАРТА --- */
+        /* --- КАРТА (интерактивная) --- */
         .map-container {
             width: 100%;
             height: 220px;
@@ -227,10 +231,10 @@
             width: 100%;
             height: 100%;
             border: none;
-            filter: grayscale(100%) invert(90%) contrast(120%); /* Стилизация под ч/б документ */
+            filter: grayscale(100%) invert(90%) contrast(120%);
         }
 
-        /* --- РАСШИРЕННАЯ АНКЕТА --- */
+        /* --- ФОРМА "ПРОТОКОЛ ЯВКИ" --- */
         .form-group {
             margin-bottom: 18px;
         }
@@ -283,6 +287,48 @@
             color: #fff;
             border-color: #a72626;
         }
+
+        /* --- НОВЫЙ БЛОК: КОНТАКТЫ И ПОЖЕЛАНИЯ --- */
+        .contacts-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        .contact-card {
+            background: rgba(0,0,0,0.05);
+            border-left: 4px solid #a72626;
+            padding: 10px 14px;
+        }
+        .contact-card strong {
+            font-family: 'Special Elite', cursive;
+            font-size: 16px;
+        }
+        .contact-card p {
+            font-size: 13px;
+            margin-top: 5px;
+        }
+        .wish-area {
+            margin-top: 20px;
+            border-top: 2px dashed #333;
+            padding-top: 18px;
+        }
+        .wish-area textarea {
+            width: 100%;
+            background: transparent;
+            border: 1px solid #333;
+            font-family: 'Courier Prime', monospace;
+            padding: 10px;
+            font-size: 14px;
+            color: #111;
+            resize: vertical;
+            min-height: 80px;
+            border-radius: 3px;
+        }
+        .wish-area textarea:focus {
+            outline: 2px solid #a72626;
+            background: rgba(255,255,240,0.2);
+        }
     </style>
 </head>
 <body>
@@ -291,18 +337,18 @@
         ДЕПАРТАМЕНТ БРАКОСОЧЕТАНИЙ // ДЕЛО № СВАДЬБА-2026
     </div>
 
-    <!-- БЛОК 1: ОРДЕР И ОРИЕНТИРОВКИ (ОДНА СТРОКА НА ВСЕХ ЭКРАНАХ) -->
+    <!-- БЛОК 1: ОРДЕР И ОРИЕНТИРОВКИ (ФОТО В ОДНУ СТРОКУ) -->
     <section class="document-block hidden-block" id="block-main">
         <div class="stamp stamp-red" style="top: 15px; right: 15px;">ДОСЬЕ</div>
         <h2 class="doc-title">ОРДЕР НА ПЕРЕХВАТ №0509</h2>
 
         <div class="mugshot-row">
             <div class="photo-frame">
-                <img src="жених.png" alt="Лёша">
+                <img src="https://i.imgur.com/8Km9tLL.jpeg" alt="Лёша">
                 <div class="photo-caption">ПОДОЗР.: ЛЁША</div>
             </div>
             <div class="photo-frame">
-                <img src="невеста.png" alt="Саша">
+                <img src="https://i.imgur.com/2n2FqX2.jpeg" alt="Саша">
                 <div class="photo-caption">ПОДОЗР.: САША</div>
             </div>
         </div>
@@ -325,33 +371,33 @@
         </div>
     </section>
 
-    <!-- БЛОК 3: ПОДРОБНЫЙ ТАЙМИНГ -->
+    <!-- БЛОК 3: ПОДРОБНЫЙ ТАЙМИНГ (КАЛЕНДАРЬ СОБЫТИЙ) -->
     <section class="document-block hidden-block" id="block-timeline">
         <h2 class="doc-title">Протокол следственных мероприятий</h2>
         
         <div class="timeline">
             <div class="timeline-item">
-                <span class="time-badge">16:00 — Сбор оперативного состава</span>
+                <span class="time-badge">📅 5 сентября 2026, 16:00 — Сбор оперативного состава</span>
                 <p class="time-desc">Прибытие соучастников на объект. Проверка готовности, тайный велкам-коктейль.</p>
             </div>
             <div class="timeline-item">
-                <span class="time-badge">16:30 — Торжественный приговор</span>
+                <span class="time-badge">📅 5 сентября 2026, 16:30 — Торжественный приговор</span>
                 <p class="time-desc">Официальное подписание документов. Заключение под пожизненную стражу брака.</p>
             </div>
             <div class="timeline-item">
-                <span class="time-badge">17:30 — Фото-следствие</span>
+                <span class="time-badge">📅 5 сентября 2026, 17:30 — Фото-следствие</span>
                 <p class="time-desc">Сбор улик. Массовое запечатление всех подельников и свидетелей на памятные фото.</p>
             </div>
             <div class="timeline-item">
-                <span class="time-badge">18:00 — Начало допроса (Банкет)</span>
+                <span class="time-badge">📅 5 сентября 2026, 18:00 — Начало допроса (Банкет)</span>
                 <p class="time-desc">Праздничное застолье. Проверка гостей на умение весело проводить время.</p>
             </div>
             <div class="timeline-item">
-                <span class="time-badge">21:30 — Сладкая контрабанда</span>
+                <span class="time-badge">📅 5 сентября 2026, 21:30 — Сладкая контрабанда</span>
                 <p class="time-desc">Разрезание главного вещественного доказательства — свадебного торта.</p>
             </div>
             <div class="timeline-item">
-                <span class="time-badge">23:00 — Финальный залп</span>
+                <span class="time-badge">📅 5 сентября 2026, 23:00 — Финальный залп</span>
                 <p class="time-desc">Завершение официального режима. Конвоирование молодых в медовый месяц.</p>
             </div>
         </div>
@@ -378,15 +424,15 @@
     <section class="document-block hidden-block" id="block-location">
         <h2 class="doc-title">Координаты секретного объекта</h2>
         <div class="main-law">
-            <strong>ОБЪЕКТ:</strong> Кафе "Публика"»<br>
+            <strong>ОБЪЕКТ:</strong> Кафе "Публика"<br>
             <strong>МЕСТОНАХОЖДЕНИЕ:</strong> ул. Свободы, д. 12
         </div>
-        <!-- Интерактивная карта (замените src на вашу ссылку из Яндекс/Google карт при необходимости) -->
         <div class="map-container">
-<iframe src="https://yandex.by/maps/org/publika/1386666836/?display-text=Кафе&ll=27.559949%2C53.902504&mode=search&sll=27.555691%2C53.902735&sspn=0.231056%2C0.092654&text=Кафе&z=14" loading="lazy"></iframe>        </div>
+            <iframe src="https://yandex.by/maps/org/publika/1386666836/?display-text=Кафе&ll=27.559949%2C53.902504&mode=search&sll=27.555691%2C53.902735&sspn=0.231056%2C0.092654&text=Кафе&z=14" loading="lazy"></iframe>
+        </div>
     </section>
 
-    <!-- БЛОК 6: РАСШИРЕННАЯ АНКЕТА ДОПРОСА -->
+    <!-- БЛОК 6: РАСШИРЕННАЯ АНКЕТА ДОПРОСА (RSVP) -->
     <section class="document-block hidden-block" id="block-rsvp">
         <div class="stamp stamp-blue" style="top: 15px; right: 15px;">ПРОТОКОЛ ЯВКИ</div>
         <h2 class="doc-title">Лист допроса свидетеля</h2>
@@ -435,9 +481,37 @@
         </form>
     </section>
 
+    <!-- НОВЫЙ БЛОК 7: КОНТАКТЫ И ПОЖЕЛАНИЯ (в том же стиле) -->
+    <section class="document-block hidden-block" id="block-contacts">
+        <div class="stamp stamp-red" style="top: 10px; right: 10px;">СВЯЗЬ</div>
+        <h2 class="doc-title">Канал связи и пожелания</h2>
+        
+        <div class="contacts-grid">
+            <div class="contact-card">
+                <strong>📞 Оперативный штаб (Свидетели):</strong>
+                <p>Анна: +375 (29) 123-45-67<br>Дмитрий: +375 (29) 987-65-43</p>
+            </div>
+            <div class="contact-card">
+                <strong>📧 Электронная почта:</strong>
+                <p>svadba2026@agent.ru</p>
+            </div>
+            <div class="contact-card">
+                <strong>🕵️‍♂️ Координатор (Организатор):</strong>
+                <p>Екатерина · +375 (33) 444-55-66</p>
+            </div>
+        </div>
+
+        <!-- БЛОК ПОЖЕЛАНИЙ -->
+        <div class="wish-area">
+            <label for="wishMessage" style="font-family: 'Special Elite', cursive; font-size: 16px; display: block; margin-bottom: 8px;">📜 Пожелания подозреваемым (молодым):</label>
+            <textarea id="wishMessage" placeholder="Напишите свои тёплые слова, которые мы зачитаем в ходе следствия..."></textarea>
+            <button type="button" id="sendWishBtn" class="submit-btn" style="margin-top: 12px;">Отправить шифровку</button>
+        </div>
+    </section>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- ТАЙМЕР ОБРАТНОГО ОТСЧЕТА (Цель: 5 сентября 2026) ---
+            // --- ТАЙМЕР ОБРАТНОГО ОТСЧЕТА (Цель: 5 сентября 2026 16:00) ---
             const targetDate = new Date('September 5, 2026 16:00:00').getTime();
 
             const updateTimer = () => {
@@ -464,7 +538,7 @@
 
             // --- АНИМАЦИЯ СКРОЛЛА ---
             const blocks = document.querySelectorAll('.hidden-block');
-            const rotations = [-0.5, 0.4, -0.4, 0.5, -0.3, 0.3]; 
+            const rotations = [-0.5, 0.4, -0.4, 0.5, -0.3, 0.3, -0.2]; 
 
             const checkScroll = () => {
                 const triggerBottom = window.innerHeight / 6 * 5;
@@ -479,7 +553,7 @@
             window.addEventListener('scroll', checkScroll);
             checkScroll();
 
-            // --- ФОРМА ---
+            // --- ФОРМА "ПРОТОКОЛ ЯВКИ" ---
             const form = document.getElementById('interrogationForm');
             const submitBtn = document.getElementById('submitBtn');
 
@@ -491,6 +565,28 @@
                 submitBtn.style.color = "#fff";
                 submitBtn.disabled = true;
                 alert("Показания внесены в личное дело подозреваемых!");
+            });
+
+            // --- КНОПКА "ОТПРАВИТЬ ШИФРОВКУ" (Пожелания) ---
+            const sendWishBtn = document.getElementById('sendWishBtn');
+            const wishMessage = document.getElementById('wishMessage');
+
+            sendWishBtn.addEventListener('click', () => {
+                const msg = wishMessage.value.trim();
+                if (msg === '') {
+                    alert('Напишите пожелание, прежде чем отправить шифровку.');
+                    return;
+                }
+                alert(`📨 Ваше пожелание отправлено в архив дела №СВАДЬБА-2026!\n\n«${msg}»`);
+                wishMessage.value = '';
+                sendWishBtn.innerText = "✉️ Шифровка отправлена!";
+                sendWishBtn.style.backgroundColor = "#2e7d32";
+                sendWishBtn.style.borderColor = "#2e7d32";
+                setTimeout(() => {
+                    sendWishBtn.innerText = "Отправить шифровку";
+                    sendWishBtn.style.backgroundColor = "#222";
+                    sendWishBtn.style.borderColor = "#222";
+                }, 2000);
             });
         });
     </script>
