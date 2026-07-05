@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>УГОЛОВНОЕ ДЕЛО № СВАДЬБА-2026</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Special+Elite&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #111;
+            background-image: 
+                radial-gradient(circle, #252525 10%, #0a0a0a 90%),
+                linear-gradient(rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0.4) 50%);
+            background-size: auto, 100% 4px;
+            color: #222;
+            font-family: 'Courier Prime', monospace;
+            padding: 40px 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 50px;
+            overflow-x: hidden;
+        }
+
+        /* Анимация плавного появления */
+        .hidden-block {
+            opacity: 0;
+            transform: translateY(35px) scale(0.97);
+            transition: all 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .show-block {
+            opacity: 1;
+            transform: translateY(0) scale(1) !important;
+        }
+
+        .document-block {
+            background-color: #c5b497;
+            width: 100%;
+            max-width: 650px;
+            padding: 30px 20px;
+            border: 2px solid #554834;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8), inset 0 0 50px rgba(0,0,0,0.15);
+            position: relative;
+            border-radius: 3px;
+        }
+
+        /* Индивидуальные цвета папок */
+        #block-main { background-color: #c5b497; }
+        #block-timer { background-color: #bfae91; }
+        #block-timeline { background-color: #cbc0aa; }
+        #block-dresscode { background-color: #c2b59b; }
+        #block-location { background-color: #c0b093; }
+        #block-rsvp { background-color: #c9bc9c; }
+
+        .doc-title {
+            font-family: 'Special Elite', cursive;
+            text-align: center;
+            font-size: 22px;
+            text-transform: uppercase;
+            border-bottom: 2px dashed #333;
+            padding-bottom: 12px;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+        }
+
+        .stamp {
+            position: absolute;
+            font-family: 'Special Elite', cursive;
+            font-weight: bold;
+            text-transform: uppercase;
+            border: 4px double currentColor;
+            padding: 4px 10px;
+            font-size: 14px;
+            opacity: 0.85;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .stamp-red { color: #a72626; border-color: #a72626; transform: rotate(-10deg); }
+        .stamp-blue { color: #0d47a1; border-color: #0d47a1; transform: rotate(12deg); }
+
+        /* --- ФОТО СТРОГО В ОДНУ СТРОКУ НА ЛЮБЫХ ЭКРАНАХ --- */
+        .mugshot-row {
+            display: flex;
+            flex-direction: row; /* Всегда строка */
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+        .photo-frame {
+            flex: 1;
+            background: #fff;
+            padding: 6px 6px 16px 6px;
+            border: 1px solid #777;
+            box-shadow: 2px 4px 8px rgba(0,0,0,0.3);
+            text-align: center;
+            position: relative;
+            min-width: 0; /* Предотвращает распирание во флексбоксах */
+        }
+        .photo-frame img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            filter: grayscale(100%) contrast(130%);
+            border: 1px solid #aaa;
+        }
+        @media(min-width: 450px) { .photo-frame img { height: 220px; } }
+
+        .photo-caption {
+            font-size: 10px;
+            margin-top: 5px;
+            font-weight: bold;
+            color: #333;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .intro-text {
+            font-size: 15px;
+            line-height: 1.5;
+            text-align: justify;
+            margin-bottom: 15px;
+        }
+        
+        .main-law {
+            font-family: 'Special Elite', cursive;
+            background: rgba(0,0,0,0.05);
+            border-left: 5px solid #a72626;
+            padding: 10px 12px;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+
+        /* --- СТИЛИ ТАЙМЕРА --- */
+        .timer-grid {
+            display: flex;
+            justify-content: space-around;
+            margin: 15px 0;
+            background: #222;
+            color: #c5b497;
+            padding: 15px 10px;
+            border-radius: 4px;
+            font-family: 'Special Elite', cursive;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+        }
+        .timer-item {
+            text-align: center;
+        }
+        .timer-num {
+            font-size: 28px;
+            display: block;
+            color: #ff3333;
+            text-shadow: 0 0 4px rgba(255,51,51,0.4);
+        }
+        .timer-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: #aaa;
+        }
+
+        /* --- РАСШИРЕННЫЙ ТАЙМИНГ --- */
+        .timeline {
+            position: relative;
+            margin: 10px 0;
+            padding-left: 15px;
+            border-left: 2px dashed #444;
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .timeline-item::before {
+            content: "•";
+            position: absolute;
+            left: -22px; top: -3px;
+            color: #a72626;
+            font-size: 20px;
+        }
+        .time-badge {
+            font-family: 'Special Elite', cursive;
+            color: #a72626;
+            font-weight: bold;
+            font-size: 15px;
+        }
+        .time-desc {
+            font-size: 13px;
+            line-height: 1.4;
+            color: #333;
+        }
+
+        /* --- БЛОК ДРЕСС-КОД --- */
+        .color-palette {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            margin-top: 15px;
+        }
+        .color-circle {
+            flex: 1;
+            height: 45px;
+            border: 2px solid #333;
+            border-radius: 4px;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* --- ИНТЕРАКТИВНАЯ КАРТА --- */
+        .map-container {
+            width: 100%;
+            height: 220px;
+            border: 2px solid #222;
+            margin-top: 15px;
+            background: #444;
+        }
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            filter: grayscale(100%) invert(90%) contrast(120%); /* Стилизация под ч/б документ */
+        }
+
+        /* --- РАСШИРЕННАЯ АНКЕТА --- */
+        .form-group {
+            margin-bottom: 18px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+        .form-input, select {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid #333;
+            font-family: 'Courier Prime', monospace;
+            font-size: 15px;
+            color: #111;
+            padding: 5px 0;
+            outline: none;
+        }
+        select {
+            border-bottom: 1px solid #333;
+            background-color: #c9bc9c;
+            cursor: pointer;
+        }
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 6px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        .submit-btn {
+            background-color: #222;
+            color: #c5b497;
+            font-family: 'Special Elite', cursive;
+            font-size: 16px;
+            padding: 12px 20px;
+            border: 2px solid #222;
+            cursor: pointer;
+            text-transform: uppercase;
+            width: 100%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+            transition: all 0.2s ease;
+        }
+        .submit-btn:hover {
+            background-color: #a72626;
+            color: #fff;
+            border-color: #a72626;
+        }
+    </style>
+</head>
+<body>
+
+    <div style="color: #aaa; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; text-align: center;">
+        ДЕПАРТАМЕНТ БРАКОСОЧЕТАНИЙ // ДЕЛО № СВАДЬБА-2026
+    </div>
+
+    <!-- БЛОК 1: ОРДЕР И ОРИЕНТИРОВКИ (ОДНА СТРОКА НА ВСЕХ ЭКРАНАХ) -->
+    <section class="document-block hidden-block" id="block-main">
+        <div class="stamp stamp-red" style="top: 15px; right: 15px;">ДОСЬЕ</div>
+        <h2 class="doc-title">ОРДЕР НА ПЕРЕХВАТ №0509</h2>
+
+        <div class="mugshot-row">
+            <div class="photo-frame">
+                <img src="жених.png" alt="Лёша">
+                <div class="photo-caption">ПОДОЗР.: ЛЁША</div>
+            </div>
+            <div class="photo-frame">
+                <img src="невеста.png" alt="Саша">
+                <div class="photo-caption">ПОДОЗР.: САША</div>
+            </div>
+        </div>
+        
+        <p class="intro-text">
+            Внимание! Вышеуказанные лица признаны виновными в создании нерушимого союза. Вы призываетесь в качестве свидетеля и сообщника.
+        </p>
+    </section>
+
+    <!-- БЛОК 2: ДО СУДА ОСТАЛОСЬ (ТАЙМЕР) -->
+    <section class="document-block hidden-block" id="block-timer">
+        <div class="stamp stamp-blue" style="top: 10px; right: 20px;">ОТЧЕТ ВРЕМЕНИ</div>
+        <h2 class="doc-title">Срок до исполнения приговора</h2>
+        
+        <div class="timer-grid">
+            <div class="timer-item"><span class="timer-num" id="days">00</span><span class="timer-label">Дней</span></div>
+            <div class="timer-item"><span class="timer-num" id="hours">00</span><span class="timer-label">Часов</span></div>
+            <div class="timer-item"><span class="timer-num" id="minutes">00</span><span class="timer-label">Мин</span></div>
+            <div class="timer-item"><span class="timer-num" id="seconds">00</span><span class="timer-label">Сек</span></div>
+        </div>
+    </section>
+
+    <!-- БЛОК 3: ПОДРОБНЫЙ ТАЙМИНГ -->
+    <section class="document-block hidden-block" id="block-timeline">
+        <h2 class="doc-title">Протокол следственных мероприятий</h2>
+        
+        <div class="timeline">
+            <div class="timeline-item">
+                <span class="time-badge">16:00 — Сбор оперативного состава</span>
+                <p class="time-desc">Прибытие соучастников на объект. Проверка готовности, тайный велкам-коктейль.</p>
+            </div>
+            <div class="timeline-item">
+                <span class="time-badge">16:30 — Торжественный приговор</span>
+                <p class="time-desc">Официальное подписание документов. Заключение под пожизненную стражу брака.</p>
+            </div>
+            <div class="timeline-item">
+                <span class="time-badge">17:30 — Фото-следствие</span>
+                <p class="time-desc">Сбор улик. Массовое запечатление всех подельников и свидетелей на памятные фото.</p>
+            </div>
+            <div class="timeline-item">
+                <span class="time-badge">18:00 — Начало допроса (Банкет)</span>
+                <p class="time-desc">Праздничное застолье. Проверка гостей на умение весело проводить время.</p>
+            </div>
+            <div class="timeline-item">
+                <span class="time-badge">21:30 — Сладкая контрабанда</span>
+                <p class="time-desc">Разрезание главного вещественного доказательства — свадебного торта.</p>
+            </div>
+            <div class="timeline-item">
+                <span class="time-badge">23:00 — Финальный залп</span>
+                <p class="time-desc">Завершение официального режима. Конвоирование молодых в медовый месяц.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- БЛОК 4: ДРЕСС-КОД -->
+    <section class="document-block hidden-block" id="block-dresscode">
+        <div class="stamp stamp-red" style="bottom: 15px; left: 15px;">ТАКТИЧЕСКИЙ ВИД</div>
+        <h2 class="doc-title">Форма одежды (Dress Code)</h2>
+        <p class="intro-text">
+            Для соблюдения маскировки следствие настоятельно рекомендует придерживаться вечернего стиля (Cocktail / Black Tie) в рамках следующей цветовой палитры улик:
+        </p>
+        
+        <div class="color-palette">
+            <div class="color-circle" style="background-color: #2b2b2b;" title="Графит"></div>
+            <div class="color-circle" style="background-color: #4a5d4e;" title="Олива"></div>
+            <div class="color-circle" style="background-color: #8c7662;" title="Мокка"></div>
+            <div class="color-circle" style="background-color: #d9cbb6;" title="Беж"></div>
+            <div class="color-circle" style="background-color: #614051;" title="Марсала"></div>
+        </div>
+    </section>
+
+    <!-- БЛОК 5: ЛОКАЦИЯ С ИНТЕРАКТИВНОЙ КАРТОЙ -->
+    <section class="document-block hidden-block" id="block-location">
+        <h2 class="doc-title">Координаты секретного объекта</h2>
+        <div class="main-law">
+            <strong>ОБЪЕКТ:</strong> Банкетный комплекс «Цитадель»<br>
+            <strong>МЕСТОНАХОЖДЕНИЕ:</strong> ул. Свободы, д. 12
+        </div>
+        <!-- Интерактивная карта (замените src на вашу ссылку из Яндекс/Google карт при необходимости) -->
+        <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2350.932408901247!2d27.5583!3d53.9023!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTPCsDU0JzA4LjMiTiAyN8KwMzMnMjkuOSJF!5e0!3m2!1sru!2s!4v1625000000000!5m2!1sru!2s" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </section>
+
+    <!-- БЛОК 6: РАСШИРЕННАЯ АНКЕТА ДОПРОСА -->
+    <section class="document-block hidden-block" id="block-rsvp">
+        <div class="stamp stamp-blue" style="top: 15px; right: 15px;">ПРОТОКОЛ ЯВКИ</div>
+        <h2 class="doc-title">Лист допроса свидетеля</h2>
+        
+        <form id="interrogationForm">
+            <div class="form-group">
+                <label for="guestName">Ваше Имя и Фамилия:</label>
+                <input type="text" id="guestName" class="form-input" required placeholder="Иванов Иван">
+            </div>
+
+            <div class="form-group">
+                <label>Признание в посещении:</label>
+                <label class="checkbox-label">
+                    <input type="radio" name="status" value="accept" checked> [ X ] Подтверждаю явку, буду лично
+                </label>
+                <label class="checkbox-label">
+                    <input type="radio" name="status" value="decline"> [   ] Не смогу, ухожу в глубокое подполье
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="alcohol">Выбор контрабандного пайка (Алкоголь):</label>
+                <select id="alcohol">
+                    <option value="wine_dry">Вино сухое / полусухое</option>
+                    <option value="whiskey">Крепкие напитки (Виски/Водка)</option>
+                    <option value="champagne">Игристое</option>
+                    <option value="none">Я не употребляю горючее</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Состав вашей следственной группы:</label>
+                <label class="checkbox-label"><input type="checkbox" id="withPair"> Буду со спутником/спутницей</label>
+                <label class="checkbox-label"><input type="checkbox" id="withChildren"> Со мной будут дети</label>
+            </div>
+
+            <div class="form-group">
+                <label for="transfer">Требуется ли спец-конвой (Трансфер до локации)?</label>
+                <select id="transfer">
+                    <option value="no">Добрая воля, доберусь сам</option>
+                    <option value="yes">Да, нужен трансфер до места</option>
+                </select>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">Сдать показания в архив</button>
+        </form>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- ТАЙМЕР ОБРАТНОГО ОТСЧЕТА (Цель: 5 сентября 2026) ---
+            const targetDate = new Date('September 5, 2026 16:00:00').getTime();
+
+            const updateTimer = () => {
+                const now = new Date().getTime();
+                const difference = targetDate - now;
+
+                if (difference < 0) {
+                    document.getElementById('block-timer').style.display = 'none';
+                    return;
+                }
+
+                const d = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const h = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((difference % (1000 * 60)) / 1000);
+
+                document.getElementById('days').innerText = d < 10 ? '0' + d : d;
+                document.getElementById('hours').innerText = h < 10 ? '0' + h : h;
+                document.getElementById('minutes').innerText = m < 10 ? '0' + m : m;
+                document.getElementById('seconds').innerText = s < 10 ? '0' + s : s;
+            };
+            setInterval(updateTimer, 1000);
+            updateTimer();
+
+            // --- АНИМАЦИЯ СКРОЛЛА ---
+            const blocks = document.querySelectorAll('.hidden-block');
+            const rotations = [-0.5, 0.4, -0.4, 0.5, -0.3, 0.3]; 
+
+            const checkScroll = () => {
+                const triggerBottom = window.innerHeight / 6 * 5;
+                blocks.forEach((block, index) => {
+                    const blockTop = block.getBoundingClientRect().top;
+                    if(blockTop < triggerBottom) {
+                        block.style.transform = `rotate(${rotations[index % rotations.length]}deg)`;
+                        block.classList.add('show-block');
+                    }
+                });
+            };
+            window.addEventListener('scroll', checkScroll);
+            checkScroll();
+
+            // --- ФОРМА ---
+            const form = document.getElementById('interrogationForm');
+            const submitBtn = document.getElementById('submitBtn');
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                submitBtn.innerText = "ПРОТОКОЛ ПРИНЯТ!";
+                submitBtn.style.backgroundColor = "#2e7d32";
+                submitBtn.style.borderColor = "#2e7d32";
+                submitBtn.style.color = "#fff";
+                submitBtn.disabled = true;
+                alert("Показания внесены в личное дело подозреваемых!");
+            });
+        });
+    </script>
+</body>
+</html>
